@@ -1,0 +1,25 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Select an Events</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button name="save" class="btn btn-outline-info" type="submit">Save</button>
+            </div>
+        </form>
+        {% for select in myselect.selections %}
+      <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ select.tag }}</a>
+                <h3>{{ select.conference_preference }}</h3>
+            </div>
+      </div>
+    {% endfor %}
+
+    </div>
+{% endblock content %}

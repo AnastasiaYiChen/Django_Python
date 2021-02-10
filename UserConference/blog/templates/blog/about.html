@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+      {% for events in  eventsview %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{% url 'blog-home' %}">{{ events.events_location }}</a>
+              <small class="text-muted">{{ events.date_posted|date:"F d, Y" }}</small>
+            </div>
+            <h2><a class="article-title" href="{% url 'blog-home' %}">{{ events.events_name }}</a></h2>
+            <p class="article-content">{{ events.events_description }}</p>
+          </div>
+        </article>
+    {% endfor %}
+
+{% endblock content %}

@@ -1,0 +1,40 @@
+{% load static %}
+
+<!--
+M05 Django:HTML Templates
+Author: Yi Chen
+2020_10_29
+
+File Name: index.html
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+</head>
+
+
+<body>
+{% if latest_question_list %}
+<!--    header image-->
+    <header class="header-image"></header>
+
+<!-- vote content style -->
+    <div class="content">
+        <div >
+            <ul>
+            {% for question in latest_question_list %}
+                <li><h3><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></h3></li>
+            {% endfor %}
+            </ul>
+
+        </div>
+
+        {% else %}
+            <p>No polls are available.</p>
+        {% endif %}
+    </div>
+
+</body>

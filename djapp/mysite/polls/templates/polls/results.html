@@ -1,0 +1,48 @@
+{% load static %}
+{% load humanize %}
+<!--
+M05 Django:HTML Templates
+Author: Yi Chen
+2020_10_29
+
+File Name: results.html
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+<!--    get django chart library-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+</head>
+
+<body>
+
+<!--    set header by use header image-->
+    <a href="{% url 'polls:index' %}"><header class="header-image"></header></a>
+
+    <div class="contentResult">
+        <h1 class="textbackground">{{ question.question_text }}</h1>
+
+        <div class="divResult">
+            <ul>
+                <!-- get voted data list into html page-->
+            {% for choice in question.choice_set.all %}
+                <!--   for color to list match chart color                                                   add apnumber humanize For numbers 1-9 -->
+                <li id="li{{forloop.counter}}" class="liResult"><p>{{ choice.choice_text }} -- {{ choice.votes|apnumber }} vote{{ choice.votes|pluralize}}</p></li>
+                <!-- pass label && vote value to chart.js               -->
+                <input type="hidden" name="choiceLabels" value="{{ choice.choice_text }}">
+                <input type="hidden" name="choiceVotes" value="{{ choice.votes }}">
+            {% endfor %}
+            </ul>
+        </div>
+
+        <a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+        <!-- render the pie chart-->
+        {% load humanize %}
+        <canvas id="pie-chart"></canvas>
+    </div>
+</body>
+
+<script src="{% static 'polls/chart.js' %}"></script>

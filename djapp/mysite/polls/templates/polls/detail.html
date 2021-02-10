@@ -1,0 +1,45 @@
+{% load static %}
+
+<!--
+M05 Django:HTML Templates
+Author: Yi Chen
+2020_10_29
+
+File Name: detail.html
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--     let web designers take control over the viewport, through the <meta> tag.-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+
+</head>
+
+<body>
+
+<!--set style of header-->
+    <a href="{% url 'polls:index' %}"><header class="header-image"></header></a>
+    <div class="content">
+<!--        make a textBlock -->
+        <div class="textBlock">
+        <h1>{{ question.question_text }}</h1>
+
+        <form action="{% url 'polls:vote' question.id %}" method="post">
+            {% csrf_token %}
+            <!--   put all vote data to html         -->
+            {% for choice in question.choice_set.all %}
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                <!--   loop label         -->
+                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            {% endfor %}
+
+            <input type="submit" value="Vote">
+
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        </form>
+
+        </div>
+    </div>
+</body>
